@@ -1,0 +1,1539 @@
+[
+  {
+    "categoria": "Administracion remota",
+    "puertos": [
+      {
+        "puerto": 22,
+        "protocolo": "TCP",
+        "servicio": "SSH",
+        "nivel_riesgo": "medio",
+        "descripcion": "Objetivo constante de ataques de fuerza bruta y enumeracion de usuarios.",
+        "mitigacion": "Usar autenticacion por llaves publicas, deshabilitar login root y limitar intentos con Fail2ban."
+      },
+      {
+        "puerto": 23,
+        "protocolo": "TCP",
+        "servicio": "Telnet",
+        "nivel_riesgo": "critico",
+        "descripcion": "Transmite credenciales en texto plano sin ningun tipo de cifrado; muy comun en dispositivos IoT y routers antiguos.",
+        "mitigacion": "Deshabilitar Telnet y reemplazarlo por SSH."
+      },
+      {
+        "puerto": 512,
+        "protocolo": "TCP",
+        "servicio": "rexec",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo legacy que transmite credenciales sin cifrado para ejecucion remota de comandos.",
+        "mitigacion": "Deshabilitar el servicio y migrar a SSH."
+      },
+      {
+        "puerto": 513,
+        "protocolo": "TCP",
+        "servicio": "rlogin",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite inicio de sesion remoto sin cifrado y con mecanismos de confianza debiles (.rhosts).",
+        "mitigacion": "Deshabilitar el servicio y migrar a SSH."
+      },
+      {
+        "puerto": 514,
+        "protocolo": "TCP",
+        "servicio": "rsh",
+        "nivel_riesgo": "alto",
+        "descripcion": "Ejecuta comandos remotos sin autenticacion fuerte ni cifrado.",
+        "mitigacion": "Deshabilitar el servicio y migrar a SSH."
+      },
+      {
+        "puerto": 1723,
+        "protocolo": "TCP",
+        "servicio": "PPTP VPN",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo VPN obsoleto con cifrado MS-CHAPv2 severamente vulnerado y facil de desencriptar.",
+        "mitigacion": "Migrar a soluciones VPN modernas como OpenVPN, WireGuard o IPsec/IKEv2."
+      },
+      {
+        "puerto": 2222,
+        "protocolo": "TCP",
+        "servicio": "DirectAdmin / SSH Alternativo",
+        "nivel_riesgo": "alto",
+        "descripcion": "Usado frecuentemente para evadir escaneos simples de SSH, pero expuesto a fuerza bruta.",
+        "mitigacion": "Implementar Fail2ban, autenticacion por llaves publicas y desactivar acceso root."
+      },
+      {
+        "puerto": 3283,
+        "protocolo": "TCP",
+        "servicio": "Apple Remote Desktop (ARD)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de gestion remota de Mac vulnerable a autenticacion debil y fuerza bruta si esta expuesto a internet.",
+        "mitigacion": "Restringir el acceso a redes VPN y deshabilitar ARD si no se usa."
+      },
+      {
+        "puerto": 3389,
+        "protocolo": "TCP",
+        "servicio": "RDP",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto favorito de campañas de ransomware cuando queda expuesto directamente a internet.",
+        "mitigacion": "Restringir el acceso mediante VPN y habilitar autenticacion a nivel de red (NLA)."
+      },
+      {
+        "puerto": 5900,
+        "protocolo": "TCP",
+        "servicio": "VNC",
+        "nivel_riesgo": "alto",
+        "descripcion": "Frecuentemente configurado sin contraseña o con autenticacion debil, permitiendo control total del equipo.",
+        "mitigacion": "Exigir contraseñas fuertes y tunelizar el trafico mediante SSH."
+      },
+      {
+        "puerto": 5901,
+        "protocolo": "TCP",
+        "servicio": "VNC Display 1",
+        "nivel_riesgo": "alto",
+        "descripcion": "Primera sesion de escritorio remoto VNC que transmite pulsaciones de teclas y pantalla sin cifrado.",
+        "mitigacion": "Encapsular el trafico VNC a traves de un tunel SSH cifrado."
+      },
+      {
+        "puerto": 5938,
+        "protocolo": "TCP",
+        "servicio": "TeamViewer",
+        "nivel_riesgo": "alto",
+        "descripcion": "Software de acceso remoto ampliamente suplantado en campañas de ingenieria social para tomar control de equipos.",
+        "mitigacion": "Habilitar autenticacion de dos factores y bloquear conexiones entrantes no solicitadas."
+      },
+      {
+        "puerto": 6000,
+        "protocolo": "TCP",
+        "servicio": "X11",
+        "nivel_riesgo": "critico",
+        "descripcion": "Sistema de ventanas grafico de Unix/Linux que sin control de acceso permite capturar pantalla y pulsaciones de teclado remotamente.",
+        "mitigacion": "Deshabilitar el reenvio X11 remoto o usar xauth con tokens de sesion."
+      },
+      {
+        "puerto": 8291,
+        "protocolo": "TCP",
+        "servicio": "MikroTik Winbox",
+        "nivel_riesgo": "critico",
+        "descripcion": "Interfaz de configuracion de routers MikroTik con multiples CVEs de ejecucion remota y fuga de credenciales (ej. CVE-2018-14847).",
+        "mitigacion": "Actualizar RouterOS a la ultima version y restringir el acceso solo a IPs de administracion."
+      }
+    ]
+  },
+  {
+    "categoria": "Administracion remota / Web y Linux",
+    "puertos": [
+      {
+        "puerto": 9090,
+        "protocolo": "TCP",
+        "servicio": "Cockpit / Prometheus",
+        "nivel_riesgo": "alto",
+        "descripcion": "Paneles web de control Linux o metricas que suelen carecer de inicio de sesion por defecto.",
+        "mitigacion": "Configurar autenticacion obligatoria con un proxy inverso y limitar por IP."
+      },
+      {
+        "puerto": 10000,
+        "protocolo": "TCP",
+        "servicio": "Webmin",
+        "nivel_riesgo": "alto",
+        "descripcion": "Panel web root para Linux con historial de fallas graves de ejecucion remota de comandos.",
+        "mitigacion": "Mantenerlo actualizado, forzar HTTPS y restringir acceso por lista blanca de IPs."
+      }
+    ]
+  },
+  {
+    "categoria": "Administracion remota / Windows",
+    "puertos": [
+      {
+        "puerto": 5985,
+        "protocolo": "TCP",
+        "servicio": "WinRM (HTTP)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Consola de administracion remota de PowerShell en texto plano para movimiento lateral.",
+        "mitigacion": "Deshabilitar la version HTTP y forzar WinRM sobre HTTPS (puerto 5986)."
+      },
+      {
+        "puerto": 5986,
+        "protocolo": "TCP",
+        "servicio": "WinRM (HTTPS)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Administracion PowerShell cifrada, objetivo frecuente de atacantes para ejecutar scripts.",
+        "mitigacion": "Exigir autenticacion con certificados de cliente y aplicar politicas JEA."
+      }
+    ]
+  },
+  {
+    "categoria": "Almacenamiento y Big Data",
+    "puertos": [
+      {
+        "puerto": 3260,
+        "protocolo": "TCP",
+        "servicio": "iSCSI",
+        "nivel_riesgo": "critico",
+        "descripcion": "Acceso a bloques de almacenamiento en red que sin autenticacion CHAP permite modificar discos duros.",
+        "mitigacion": "Activar autenticacion mutual CHAP y segmentar la red SAN en una VLAN aislada."
+      },
+      {
+        "puerto": 8088,
+        "protocolo": "TCP",
+        "servicio": "Apache Hadoop YARN",
+        "nivel_riesgo": "critico",
+        "descripcion": "Administrador de recursos de Hadoop vulnerable a comandos RCE si la API no requiere autenticacion.",
+        "mitigacion": "Habilitar la autenticacion Kerberos e implementar listas de acceso en YARN."
+      },
+      {
+        "puerto": 50070,
+        "protocolo": "TCP",
+        "servicio": "Hadoop HDFS NameNode",
+        "nivel_riesgo": "critico",
+        "descripcion": "Consola web del sistema de archivos distribuido; permite ver y borrar archivos si no tiene Kerberos.",
+        "mitigacion": "Habilitar seguridad Kerberos y bloquear los puertos de administracion web en el firewall."
+      }
+    ]
+  },
+  {
+    "categoria": "Autenticacion y Directorio",
+    "puertos": [
+      {
+        "puerto": 49,
+        "protocolo": "TCP/UDP",
+        "servicio": "TACACS+",
+        "nivel_riesgo": "alto",
+        "descripcion": "Si no se usa el cifrado adecuado, las credenciales de administracion de switches/routers pueden ser interceptadas.",
+        "mitigacion": "Implementar llaves secretas complejas y restringir el acceso al servidor TACACS+ mediante ACLs."
+      },
+      {
+        "puerto": 88,
+        "protocolo": "TCP/UDP",
+        "servicio": "Kerberos",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite ataques de extraccion de tickets y contraseñas de servicio (Kerberoasting).",
+        "mitigacion": "Usar contraseñas largas y complejas en cuentas de servicio (AES-256)."
+      },
+      {
+        "puerto": 389,
+        "protocolo": "TCP/UDP",
+        "servicio": "LDAP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Consultas de directorio sin cifrar; expone nombres de usuario y claves en texto plano.",
+        "mitigacion": "Migrar obligatoriamente a LDAPS (puerto 636 con TLS) y forzar firma digital."
+      },
+      {
+        "puerto": 464,
+        "protocolo": "TCP/UDP",
+        "servicio": "Kerberos kpasswd",
+        "nivel_riesgo": "medio",
+        "descripcion": "Servicio de cambio de contraseñas Kerberos que, si es interceptado, expone el proceso de cambio de credenciales.",
+        "mitigacion": "Restringir el acceso a la red interna y forzar el uso de canales cifrados."
+      },
+      {
+        "puerto": 636,
+        "protocolo": "TCP",
+        "servicio": "LDAPS",
+        "nivel_riesgo": "medio",
+        "descripcion": "LDAP seguro que, si esta expuesto a redes no confiables, facilita ataques de fuerza bruta.",
+        "mitigacion": "Bloquear acceso perimetral y limitar peticiones a servidores de autenticacion internos."
+      },
+      {
+        "puerto": 749,
+        "protocolo": "TCP/UDP",
+        "servicio": "Kerberos kadmin",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto administrativo de Kerberos usado para gestionar principals; comprometerlo permite crear o modificar cuentas del dominio.",
+        "mitigacion": "Restringir el acceso solo a servidores administrativos autorizados."
+      },
+      {
+        "puerto": 1645,
+        "protocolo": "UDP",
+        "servicio": "RADIUS Authentication (legacy)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto legacy de autenticacion RADIUS (previo al estandar 1812) aun usado por equipos antiguos sin cifrado fuerte.",
+        "mitigacion": "Migrar a RadSec (TLS) o al puerto estandar 1812 con secretos compartidos robustos."
+      },
+      {
+        "puerto": 1646,
+        "protocolo": "UDP",
+        "servicio": "RADIUS Accounting (legacy)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto legacy de accounting RADIUS que revela patrones de uso y sesiones autenticadas.",
+        "mitigacion": "Restringir el trafico solo entre el NAS y el servidor RADIUS autorizado."
+      },
+      {
+        "puerto": 1812,
+        "protocolo": "UDP",
+        "servicio": "RADIUS Authentication",
+        "nivel_riesgo": "alto",
+        "descripcion": "Trafico de autenticacion centralizada que si no usa cifrado fuerte expone hashes de contraseñas.",
+        "mitigacion": "Implementar RadSec (TLS) o aislar el trafico RADIUS en una VLAN dedicada."
+      },
+      {
+        "puerto": 1813,
+        "protocolo": "UDP",
+        "servicio": "RADIUS Accounting",
+        "nivel_riesgo": "medio",
+        "descripcion": "Registra inicios de sesion y volumen de trafico, revelando patrones de uso y presencia de usuarios.",
+        "mitigacion": "Restringir la comunicacion solo entre los NAS y el servidor RADIUS autorizado."
+      },
+      {
+        "puerto": 3268,
+        "protocolo": "TCP",
+        "servicio": "Active Directory Global Catalog",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite realizar busquedas en todo el bosque de Active Directory sin cifrado habilitado.",
+        "mitigacion": "Migrar al uso de Global Catalog SSL a traves del puerto 3269."
+      },
+      {
+        "puerto": 3269,
+        "protocolo": "TCP",
+        "servicio": "Global Catalog SSL (LDAPS)",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Version cifrada del Global Catalog de Active Directory; el riesgo depende de la validez del certificado usado.",
+        "mitigacion": "Verificar la vigencia del certificado y forzar TLS 1.2+."
+      }
+    ]
+  },
+  {
+    "categoria": "Bases de datos",
+    "puertos": [
+      {
+        "puerto": 1433,
+        "protocolo": "TCP",
+        "servicio": "MSSQL",
+        "nivel_riesgo": "alto",
+        "descripcion": "Objetivo frecuente de escaneo automatizado y ataques de fuerza bruta a la cuenta \"sa\".",
+        "mitigacion": "No exponer a internet y forzar autenticacion de Windows con contraseñas fuertes."
+      },
+      {
+        "puerto": 1434,
+        "protocolo": "UDP",
+        "servicio": "MSSQL Monitor",
+        "nivel_riesgo": "alto",
+        "descripcion": "Usado para descubrir instancias SQL Server activas; explotado historicamente por el gusano Slammer.",
+        "mitigacion": "Bloquear el puerto en el firewall perimetral."
+      },
+      {
+        "puerto": 1521,
+        "protocolo": "TCP",
+        "servicio": "Oracle DB",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite enumeracion de SID y ataques de fuerza bruta si esta expuesto.",
+        "mitigacion": "Restringir el acceso por IP y renombrar el SID por defecto."
+      },
+      {
+        "puerto": 2181,
+        "protocolo": "TCP",
+        "servicio": "Apache ZooKeeper",
+        "nivel_riesgo": "critico",
+        "descripcion": "Coordinador de clusters que por defecto permite modificar configuraciones sin pedir login.",
+        "mitigacion": "Habilitar autenticacion SASL/Kerberos y bloquear el puerto con firewall."
+      },
+      {
+        "puerto": 2483,
+        "protocolo": "TCP",
+        "servicio": "Oracle DB Listener (Unencrypted)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto de escucha sin cifrar para la base de datos Oracle que transfiere datos en texto plano.",
+        "mitigacion": "Reconfigurar para usar TCPS (TLS) a traves del puerto 2484."
+      },
+      {
+        "puerto": 3306,
+        "protocolo": "TCP",
+        "servicio": "MySQL/MariaDB",
+        "nivel_riesgo": "alto",
+        "descripcion": "Frecuentemente configurado con credenciales por defecto o cuentas sin contraseña.",
+        "mitigacion": "Restringir el bind a localhost o red interna y forzar contraseñas fuertes."
+      },
+      {
+        "puerto": 5432,
+        "protocolo": "TCP",
+        "servicio": "PostgreSQL",
+        "nivel_riesgo": "alto",
+        "descripcion": "Expuesto sin restricciones permite intentos de fuerza bruta y acceso no autorizado.",
+        "mitigacion": "Configurar pg_hba.conf para restringir accesos y usar contraseñas fuertes."
+      },
+      {
+        "puerto": 5439,
+        "protocolo": "TCP",
+        "servicio": "Amazon Redshift",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto de cluster de data warehouse en la nube; expuesto publicamente permite intentos de fuerza bruta a las credenciales.",
+        "mitigacion": "Restringir el grupo de seguridad solo a IPs autorizadas y forzar SSL en la conexion."
+      },
+      {
+        "puerto": 5984,
+        "protocolo": "TCP",
+        "servicio": "CouchDB",
+        "nivel_riesgo": "critico",
+        "descripcion": "Base de datos NoSQL con interfaz HTTP que por defecto se instala en modo \"admin party\" (sin clave).",
+        "mitigacion": "Configurar el administrador con contraseña segura y desactivar el acceso no autenticado."
+      },
+      {
+        "puerto": 6379,
+        "protocolo": "TCP",
+        "servicio": "Redis",
+        "nivel_riesgo": "critico",
+        "descripcion": "Por defecto no requiere autenticacion, muy explotado para mineria de criptomonedas y ransomware.",
+        "mitigacion": "Habilitar requirepass, modo protegido y restringir el bind a localhost."
+      },
+      {
+        "puerto": 7000,
+        "protocolo": "TCP",
+        "servicio": "Apache Cassandra (inter-node)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto de comunicacion entre nodos del cluster Cassandra; sin cifrado permite interceptar o alterar datos replicados.",
+        "mitigacion": "Habilitar cifrado inter-nodo (server_encryption_options) en cassandra.yaml."
+      },
+      {
+        "puerto": 7199,
+        "protocolo": "TCP",
+        "servicio": "Cassandra JMX",
+        "nivel_riesgo": "critico",
+        "descripcion": "Interfaz de administracion JMX que, sin autenticacion, permite ejecucion remota de codigo en el nodo.",
+        "mitigacion": "Habilitar autenticacion JMX y restringir el acceso a localhost o red de administracion."
+      },
+      {
+        "puerto": 8086,
+        "protocolo": "TCP",
+        "servicio": "InfluxDB API",
+        "nivel_riesgo": "alto",
+        "descripcion": "Motor de base de datos para metricas que si no requiere token expone lecturas del sistema.",
+        "mitigacion": "Habilitar la autenticacion basada en tokens de API y forzar HTTPS."
+      },
+      {
+        "puerto": 8983,
+        "protocolo": "TCP",
+        "servicio": "Apache Solr",
+        "nivel_riesgo": "critico",
+        "descripcion": "Motor de busqueda con historial de vulnerabilidades severas de Remote Code Execution (RCE).",
+        "mitigacion": "Configurar la autenticacion basica, bloquear la interfaz admin e instalar actualizaciones."
+      },
+      {
+        "puerto": 9042,
+        "protocolo": "TCP",
+        "servicio": "Apache Cassandra Native Transport",
+        "nivel_riesgo": "alto",
+        "descripcion": "Cliente nativo de base de datos NoSQL que por defecto permite conexiones no autenticadas.",
+        "mitigacion": "Habilitar el autenticador PasswordAuthenticator en el archivo cassandra.yaml."
+      },
+      {
+        "puerto": 9092,
+        "protocolo": "TCP",
+        "servicio": "Apache Kafka",
+        "nivel_riesgo": "critico",
+        "descripcion": "Flujo de datos sin cifrar ni autenticar que permite leer o modificar todos los eventos de la red.",
+        "mitigacion": "Activar cifrado TLS en brokers, autenticacion SASL y configurar ACLs estrictas."
+      },
+      {
+        "puerto": 9160,
+        "protocolo": "TCP",
+        "servicio": "Cassandra Thrift",
+        "nivel_riesgo": "alto",
+        "descripcion": "Interfaz cliente legacy de Cassandra que puede exponer datos sin autenticacion en instalaciones antiguas.",
+        "mitigacion": "Deshabilitar la interfaz Thrift si no se usa y migrar al protocolo nativo cifrado."
+      },
+      {
+        "puerto": 9200,
+        "protocolo": "TCP",
+        "servicio": "Elasticsearch",
+        "nivel_riesgo": "critico",
+        "descripcion": "Motor de busqueda expuesto sin login que permite volcar o borrar bases de datos enteras.",
+        "mitigacion": "Habilitar autenticacion en el stack de seguridad y enlazar la escucha a localhost."
+      },
+      {
+        "puerto": 9300,
+        "protocolo": "TCP",
+        "servicio": "Elasticsearch Cluster Communication",
+        "nivel_riesgo": "critico",
+        "descripcion": "Comunicacion interna entre nodos Elasticsearch; permite inyectar o alterar clusters sin cifrado.",
+        "mitigacion": "Habilitar cifrado TLS en el nivel de transporte (transport.ssl.enabled: true)."
+      },
+      {
+        "puerto": 11211,
+        "protocolo": "TCP/UDP",
+        "servicio": "Memcached",
+        "nivel_riesgo": "critico",
+        "descripcion": "Permite leer datos en memoria sin autenticacion y amplificar ataques DDoS masivos sobre UDP.",
+        "mitigacion": "Deshabilitar el soporte UDP (-U 0) y vincular el servicio a 127.0.0.1."
+      },
+      {
+        "puerto": 27017,
+        "protocolo": "TCP",
+        "servicio": "MongoDB",
+        "nivel_riesgo": "critico",
+        "descripcion": "Historicamente expuesto sin autenticacion, causante de multiples filtraciones masivas de datos.",
+        "mitigacion": "Habilitar autenticacion obligatoria y restringir el acceso a la red interna."
+      },
+      {
+        "puerto": 27018,
+        "protocolo": "TCP",
+        "servicio": "MongoDB Shard",
+        "nivel_riesgo": "critico",
+        "descripcion": "Nodo de fragmentacion NoSQL que si se expone sin clave permite robar partes de la base de datos.",
+        "mitigacion": "Enlazar el servicio solo a interfaces internas y habilitar autenticacion por keyfiles."
+      },
+      {
+        "puerto": 27019,
+        "protocolo": "TCP",
+        "servicio": "MongoDB Config Server",
+        "nivel_riesgo": "critico",
+        "descripcion": "Almacena los metadatos de un cluster Sharded de MongoDB; su compromiso detiene la base de datos.",
+        "mitigacion": "Aislar la red de replicas y exigir autenticacion basada en certificados x509."
+      },
+      {
+        "puerto": 28015,
+        "protocolo": "TCP",
+        "servicio": "RethinkDB",
+        "nivel_riesgo": "critico",
+        "descripcion": "Base de datos NoSQL que en versiones antiguas no requeria autenticacion por defecto, permitiendo lectura y escritura libres.",
+        "mitigacion": "Habilitar autenticacion obligatoria y no exponer el puerto directamente a internet."
+      },
+      {
+        "puerto": 33060,
+        "protocolo": "TCP",
+        "servicio": "MySQL X Protocol",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo extendido de MySQL expuesto directamente a internet sujeto a fuerza bruta.",
+        "mitigacion": "Vincular la interfaz unicamente a 127.0.0.1 o redes internas seguras."
+      }
+    ]
+  },
+  {
+    "categoria": "Comparticion de archivos",
+    "puertos": [
+      {
+        "puerto": 20,
+        "protocolo": "TCP",
+        "servicio": "FTP-Data",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transfiere los datos de peticiones FTP sin cifrar, expuesto a sniffing en la red.",
+        "mitigacion": "Migrar a SFTP o FTPS cifrado y desactivar FTP en texto plano."
+      },
+      {
+        "puerto": 21,
+        "protocolo": "TCP",
+        "servicio": "FTP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transmite credenciales y datos en texto plano, expuesto a interceptacion en la red.",
+        "mitigacion": "Migrar a SFTP o FTPS y deshabilitar el modo anonimo."
+      },
+      {
+        "puerto": 135,
+        "protocolo": "TCP",
+        "servicio": "RPC (Windows)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Historicamente explotado por gusanos como Blaster; expone servicios internos de Windows.",
+        "mitigacion": "Bloquear el puerto en el firewall perimetral y restringir a la red interna."
+      },
+      {
+        "puerto": 137,
+        "protocolo": "UDP",
+        "servicio": "NetBIOS Name Service",
+        "nivel_riesgo": "medio",
+        "descripcion": "Permite enumerar nombres de equipos y recursos de red.",
+        "mitigacion": "Deshabilitar NetBIOS sobre TCP/IP si no es necesario."
+      },
+      {
+        "puerto": 138,
+        "protocolo": "UDP",
+        "servicio": "NetBIOS Datagram Service",
+        "nivel_riesgo": "medio",
+        "descripcion": "Facilita el envio de datagramas y la enumeracion de recursos compartidos.",
+        "mitigacion": "Deshabilitar NetBIOS sobre TCP/IP si no es necesario."
+      },
+      {
+        "puerto": 139,
+        "protocolo": "TCP",
+        "servicio": "NetBIOS Session Service",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite comparticion de archivos y enumeracion de recursos, historicamente vulnerable a ataques.",
+        "mitigacion": "Restringir a la red interna y deshabilitar si no se usa."
+      },
+      {
+        "puerto": 445,
+        "protocolo": "TCP",
+        "servicio": "SMB",
+        "nivel_riesgo": "critico",
+        "descripcion": "Usado por EternalBlue/WannaCry; uno de los puertos mas criticos de explotar si esta expuesto.",
+        "mitigacion": "Bloquear el acceso desde internet y mantener parches de seguridad actualizados."
+      },
+      {
+        "puerto": 548,
+        "protocolo": "TCP",
+        "servicio": "AFP (Apple Filing Protocol)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de comparticion de archivos de macOS con vulnerabilidades historicas de autenticacion y acceso no autorizado a volumenes.",
+        "mitigacion": "Actualizar el servidor de archivos y restringir el acceso a la red local."
+      },
+      {
+        "puerto": 873,
+        "protocolo": "TCP",
+        "servicio": "rsync",
+        "nivel_riesgo": "alto",
+        "descripcion": "Frecuentemente configurado sin clave, permitiendo descargar copias de seguridad enteras.",
+        "mitigacion": "Exigir autenticacion en rsyncd.conf y tunelizar la transferencia sobre SSH."
+      },
+      {
+        "puerto": 2049,
+        "protocolo": "TCP/UDP",
+        "servicio": "NFS",
+        "nivel_riesgo": "alto",
+        "descripcion": "Si no valida root_squash, permite a cualquiera montar carpetas remotas con permisos de root.",
+        "mitigacion": "Restringir montajes en /etc/exports a IPs especificas y activar root_squash."
+      },
+      {
+        "puerto": 9102,
+        "protocolo": "TCP",
+        "servicio": "Bareos / Bacula File Daemon",
+        "nivel_riesgo": "alto",
+        "descripcion": "Agente de respaldo que permite extraer copias completas del sistema de archivos si se vulnera.",
+        "mitigacion": "Exigir cifrado TLS y claves de autenticacion compartidas en los demonios."
+      }
+    ]
+  },
+  {
+    "categoria": "Contenedores, DevOps y Secretos",
+    "puertos": [
+      {
+        "puerto": 2375,
+        "protocolo": "TCP",
+        "servicio": "Docker REST API (unencrypted)",
+        "nivel_riesgo": "critico",
+        "descripcion": "API de gestion sin TLS ni clave; permite crear contenedores con acceso root al host.",
+        "mitigacion": "Cerrar el puerto 2375 y usar el puerto 2376 con certificados TLS obligatorios."
+      },
+      {
+        "puerto": 2376,
+        "protocolo": "TCP",
+        "servicio": "Docker REST API (TLS)",
+        "nivel_riesgo": "medio",
+        "descripcion": "API remota cifrada de Docker; si se filtran las llaves TLS permite control total del host.",
+        "mitigacion": "Usar certificados robustos y restringir la escucha solo a redes de administracion."
+      },
+      {
+        "puerto": 2379,
+        "protocolo": "TCP",
+        "servicio": "etcd (cliente)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Almacen clave-valor usado por Kubernetes; expuesto sin autenticacion permite leer secretos y tokens del cluster.",
+        "mitigacion": "Habilitar autenticacion por certificados de cliente (mTLS) y restringir el acceso a la red del cluster."
+      },
+      {
+        "puerto": 2380,
+        "protocolo": "TCP",
+        "servicio": "etcd (peer)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto de comunicacion entre nodos etcd; su compromiso permite alterar el estado completo del cluster.",
+        "mitigacion": "Cifrar el trafico entre pares con TLS y aislar la red del cluster."
+      },
+      {
+        "puerto": 3690,
+        "protocolo": "TCP",
+        "servicio": "Subversion (SVN)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Repositorios de codigo fuente accesibles sin SSL que permiten la exfiltracion de propiedad intelectual.",
+        "mitigacion": "Migrar el acceso SVN sobre SSH (svn+ssh) o HTTPS."
+      },
+      {
+        "puerto": 6443,
+        "protocolo": "TCP",
+        "servicio": "Kubernetes API Server",
+        "nivel_riesgo": "critico",
+        "descripcion": "Punto central del cluster Kubernetes; si permite acceso anonimo compromete la infraestructura.",
+        "mitigacion": "Desactivar accesos anonimos y aplicar control de accesos basado en roles (RBAC)."
+      },
+      {
+        "puerto": 8200,
+        "protocolo": "TCP",
+        "servicio": "HashiCorp Vault",
+        "nivel_riesgo": "critico",
+        "descripcion": "Guarda contraseñas, tokens y llaves; si la API queda expuesta sin TLS permite interceptacion.",
+        "mitigacion": "Exigir comunicacion HTTPS estricta y aislar el servidor Vault en una subred privada."
+      },
+      {
+        "puerto": 8300,
+        "protocolo": "TCP",
+        "servicio": "HashiCorp Consul",
+        "nivel_riesgo": "critico",
+        "descripcion": "Maneja el estado de servidores e infraestructura; expuesto permite la ejecucion remota de codigo.",
+        "mitigacion": "Habilitar TLS, listas ACL de acceso y deshabilitar la ejecucion de comandos remotos."
+      },
+      {
+        "puerto": 9418,
+        "protocolo": "TCP",
+        "servicio": "Git (protocolo nativo)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo Git sin cifrado ni autenticacion que puede exponer repositorios completos de codigo fuente.",
+        "mitigacion": "Deshabilitar el protocolo git:// y usar exclusivamente HTTPS o SSH."
+      },
+      {
+        "puerto": 10250,
+        "protocolo": "TCP",
+        "servicio": "Kubelet API",
+        "nivel_riesgo": "critico",
+        "descripcion": "API del agente de nodos de Kubernetes; sin autenticacion adecuada permite ejecutar comandos dentro de cualquier pod.",
+        "mitigacion": "Habilitar autenticacion y autorizacion del Kubelet (webhook) y restringir el acceso de red."
+      }
+    ]
+  },
+  {
+    "categoria": "Correo",
+    "puertos": [
+      {
+        "puerto": 25,
+        "protocolo": "TCP",
+        "servicio": "SMTP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puede ser usado como relay abierto para envio de spam o spoofing de remitente.",
+        "mitigacion": "Configurar autenticacion SMTP y restringir el relay a usuarios autorizados."
+      },
+      {
+        "puerto": 110,
+        "protocolo": "TCP",
+        "servicio": "POP3",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transmite credenciales y correos en texto plano.",
+        "mitigacion": "Migrar a POP3S (puerto 995) con TLS."
+      },
+      {
+        "puerto": 143,
+        "protocolo": "TCP",
+        "servicio": "IMAP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transmite credenciales y correos en texto plano.",
+        "mitigacion": "Migrar a IMAPS (puerto 993) con TLS."
+      },
+      {
+        "puerto": 465,
+        "protocolo": "TCP",
+        "servicio": "SMTPS",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Version cifrada de SMTP, pero riesgosa si se aceptan cifrados TLS debiles u obsoletos.",
+        "mitigacion": "Forzar el uso de TLS 1.2+ y deshabilitar cifrados obsoletos."
+      },
+      {
+        "puerto": 587,
+        "protocolo": "TCP",
+        "servicio": "SMTP (submission)",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Puerto de envio autenticado, riesgoso solo si la autenticacion es debil.",
+        "mitigacion": "Exigir autenticacion fuerte y STARTTLS obligatorio."
+      },
+      {
+        "puerto": 993,
+        "protocolo": "TCP",
+        "servicio": "IMAPS",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Version cifrada de IMAP, riesgo bajo si el certificado y la configuracion TLS son correctos.",
+        "mitigacion": "Verificar la vigencia del certificado y forzar TLS 1.2+."
+      },
+      {
+        "puerto": 995,
+        "protocolo": "TCP",
+        "servicio": "POP3S",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Version cifrada de POP3, riesgo bajo si el certificado y la configuracion TLS son correctos.",
+        "mitigacion": "Verificar la vigencia del certificado y forzar TLS 1.2+."
+      }
+    ]
+  },
+  {
+    "categoria": "Desarrollo y Middleware",
+    "puertos": [
+      {
+        "puerto": 1099,
+        "protocolo": "TCP",
+        "servicio": "Java RMI Registry",
+        "nivel_riesgo": "critico",
+        "descripcion": "El registro RMI de Java expuesto permite la deserializacion de objetos y ejecucion remota de codigo (RCE).",
+        "mitigacion": "Deshabilitar la carga remota de clases (useCodebaseOnly) y restringir el acceso por firewall."
+      },
+      {
+        "puerto": 4200,
+        "protocolo": "TCP",
+        "servicio": "Angular Dev Server",
+        "nivel_riesgo": "medio",
+        "descripcion": "Servidor de desarrollo frontend que puede quedar accesible externamente por error de configuracion.",
+        "mitigacion": "No exponer el puerto fuera de localhost y desactivarlo en produccion."
+      },
+      {
+        "puerto": 6006,
+        "protocolo": "TCP",
+        "servicio": "Storybook",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Herramienta de documentacion de componentes UI que puede filtrar codigo o configuracion interna si se expone.",
+        "mitigacion": "Restringir el acceso mediante autenticacion basica o VPN en entornos compartidos."
+      },
+      {
+        "puerto": 7001,
+        "protocolo": "TCP",
+        "servicio": "Oracle WebLogic",
+        "nivel_riesgo": "critico",
+        "descripcion": "Servidor empresarial blanco frecuente de ataques de deserializacion Java con ejecucion de codigo.",
+        "mitigacion": "Instalar parches criticos de seguridad y bloquear la consola perimetralmente."
+      },
+      {
+        "puerto": 7002,
+        "protocolo": "TCP",
+        "servicio": "Oracle WebLogic (HTTPS)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto SSL para administracion WebLogic, aun susceptible a vulnerabilidades de ejecucion remota.",
+        "mitigacion": "Aplicar parches de seguridad de Oracle trimestralmente y restringir accesos."
+      },
+      {
+        "puerto": 9229,
+        "protocolo": "TCP",
+        "servicio": "Node.js Inspector (Debug)",
+        "nivel_riesgo": "critico",
+        "descripcion": "El depurador remoto de Node.js permite ejecucion arbitraria de codigo si queda expuesto sin restriccion.",
+        "mitigacion": "Vincular el inspector solo a 127.0.0.1 y nunca habilitarlo en produccion."
+      }
+    ]
+  },
+  {
+    "categoria": "Enterprise y ERP",
+    "puertos": [
+      {
+        "puerto": 50000,
+        "protocolo": "TCP",
+        "servicio": "SAP GUI / DB2",
+        "nivel_riesgo": "alto",
+        "descripcion": "Instancia de administracion para SAP o bases de datos DB2 susceptible a interceptacion.",
+        "mitigacion": "Implementar conexiones cifradas SNC (Secure Network Communications) en SAP."
+      }
+    ]
+  },
+  {
+    "categoria": "Impresoras",
+    "puertos": [
+      {
+        "puerto": 515,
+        "protocolo": "TCP",
+        "servicio": "LPD/LPR",
+        "nivel_riesgo": "medio",
+        "descripcion": "Protocolo de impresion legacy sin autenticacion que permite enviar trabajos arbitrarios.",
+        "mitigacion": "Migrar a IPP y restringir el acceso a la red interna."
+      },
+      {
+        "puerto": 631,
+        "protocolo": "TCP",
+        "servicio": "IPP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Expone un panel web de administracion de impresion que puede revelar informacion del dispositivo.",
+        "mitigacion": "Restringir el acceso al panel de administracion y actualizar el firmware."
+      },
+      {
+        "puerto": 9100,
+        "protocolo": "TCP",
+        "servicio": "JetDirect/RAW",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite enviar comandos de impresion directos sin autenticacion, usado para ataques de denegacion de servicio en impresoras.",
+        "mitigacion": "Restringir el acceso a la VLAN de impresion y deshabilitar si no se usa."
+      },
+      {
+        "puerto": 9101,
+        "protocolo": "TCP",
+        "servicio": "HP JetDirect (puerto alterno)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto secundario de gestion de impresoras HP que puede exponer configuracion del dispositivo.",
+        "mitigacion": "Restringir el acceso a la VLAN de impresion y actualizar el firmware."
+      }
+    ]
+  },
+  {
+    "categoria": "IoT y Dispositivos conectados",
+    "puertos": [
+      {
+        "puerto": 554,
+        "protocolo": "TCP",
+        "servicio": "RTSP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Transmite el streaming de video de camaras IP, muchas veces sin autenticacion.",
+        "mitigacion": "Exigir credenciales fuertes y restringir el acceso a la red local."
+      },
+      {
+        "puerto": 1883,
+        "protocolo": "TCP",
+        "servicio": "MQTT",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo IoT que transmite lecturas de sensores y comandos en texto plano sin clave.",
+        "mitigacion": "Migrar al puerto 8883 (MQTTS con TLS) y deshabilitar conexiones anonimas."
+      },
+      {
+        "puerto": 5555,
+        "protocolo": "TCP",
+        "servicio": "ADB (Android Debug Bridge)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Expuesto sin autenticacion permite instalar aplicaciones y ejecutar comandos remotos; muy explotado por botnets.",
+        "mitigacion": "Deshabilitar la depuracion USB/red en produccion y no exponer el puerto a internet."
+      },
+      {
+        "puerto": 5683,
+        "protocolo": "UDP",
+        "servicio": "CoAP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo ligero para sensores IoT sin cifrado por defecto, vulnerable a amplificacion DDoS y suplantacion de comandos.",
+        "mitigacion": "Migrar a CoAPS (DTLS) y filtrar el trafico UDP no autorizado."
+      },
+      {
+        "puerto": 8554,
+        "protocolo": "TCP",
+        "servicio": "RTSP alternativo",
+        "nivel_riesgo": "alto",
+        "descripcion": "Variante usada por camaras y DVR, con los mismos riesgos que el puerto 554.",
+        "mitigacion": "Exigir credenciales fuertes y restringir el acceso a la red local."
+      },
+      {
+        "puerto": 8883,
+        "protocolo": "TCP",
+        "servicio": "MQTT Secure (MQTTS)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Protocolo cifrado para IoT; riesgoso si el broker acepta certificados autofirmados o debiles.",
+        "mitigacion": "Implementar validacion estricta de certificados de cliente (mTLS)."
+      },
+      {
+        "puerto": 10001,
+        "protocolo": "TCP",
+        "servicio": "Ubiquiti Discovery Protocol",
+        "nivel_riesgo": "medio",
+        "descripcion": "Servicio de descubrimiento en equipos Ubiquiti que puede ser explotado para amplificacion DDoS.",
+        "mitigacion": "Desactivar la funcion \"Ubiquiti Discovery\" en los dispositivos administrados."
+      },
+      {
+        "puerto": 37777,
+        "protocolo": "TCP",
+        "servicio": "Puerto propietario DVR/NVR",
+        "nivel_riesgo": "critico",
+        "descripcion": "Asociado a marcas como Dahua, con multiples vulnerabilidades conocidas de acceso no autorizado.",
+        "mitigacion": "Actualizar el firmware y no exponer el puerto directamente a internet."
+      }
+    ]
+  },
+  {
+    "categoria": "Mensajeria y Colas",
+    "puertos": [
+      {
+        "puerto": 4222,
+        "protocolo": "TCP",
+        "servicio": "NATS",
+        "nivel_riesgo": "alto",
+        "descripcion": "Sistema de mensajeria en tiempo real que por defecto no exige autenticacion, exponiendo todos los mensajes del sistema.",
+        "mitigacion": "Habilitar autenticacion por tokens o certificados TLS y restringir el acceso."
+      },
+      {
+        "puerto": 4369,
+        "protocolo": "TCP",
+        "servicio": "Erlang Port Mapper Daemon (EPMD)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Permite mapear nodos Erlang; expuesto a internet facilita la enumeracion de la infraestructura.",
+        "mitigacion": "Bloquear el puerto perimetralmente con el firewall o limitar a localhost."
+      },
+      {
+        "puerto": 5672,
+        "protocolo": "TCP",
+        "servicio": "AMQP (RabbitMQ)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto primario para mensajes de colas que transfiere payloads en texto plano si no usa SSL.",
+        "mitigacion": "Habilitar el puerto 5671 (AMQPS con TLS) y deshabilitar las conexiones anonimas."
+      },
+      {
+        "puerto": 8161,
+        "protocolo": "TCP",
+        "servicio": "ActiveMQ Web Console",
+        "nivel_riesgo": "critico",
+        "descripcion": "Consola web de colas con historial de fallas criticas de subida remota de archivos.",
+        "mitigacion": "Actualizar el software a la version mas reciente y desactivar acceso externo a la consola."
+      },
+      {
+        "puerto": 15672,
+        "protocolo": "TCP",
+        "servicio": "RabbitMQ Management",
+        "nivel_riesgo": "alto",
+        "descripcion": "Panel web para gestionar colas; peligroso si mantiene la cuenta por defecto guest:guest expuesta.",
+        "mitigacion": "Deshabilitar el usuario guest para conexiones remotas y crear usuarios con contraseñas seguras."
+      },
+      {
+        "puerto": 61616,
+        "protocolo": "TCP",
+        "servicio": "ActiveMQ OpenWire",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo binario de ActiveMQ con vulnerabilidades criticas de deserializacion que permiten ejecucion remota de codigo (ej. CVE-2023-46604).",
+        "mitigacion": "Actualizar ActiveMQ a la ultima version y restringir el acceso a la red interna."
+      }
+    ]
+  },
+  {
+    "categoria": "Monitoreo",
+    "puertos": [
+      {
+        "puerto": 1984,
+        "protocolo": "TCP",
+        "servicio": "Big Brother / Monitoring",
+        "nivel_riesgo": "medio",
+        "descripcion": "Agente de monitoreo antiguo que puede filtrar datos de rendimiento del sistema sin cifrar.",
+        "mitigacion": "Reemplazar por agentes modernos cifrados como Prometheus o Zabbix con TLS."
+      },
+      {
+        "puerto": 2003,
+        "protocolo": "TCP",
+        "servicio": "Graphite (Carbon)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Recibe metricas sin autenticacion, lo que permite inyectar datos falsos o extraer informacion de rendimiento.",
+        "mitigacion": "Restringir el acceso a la red interna mediante firewall."
+      },
+      {
+        "puerto": 3000,
+        "protocolo": "TCP",
+        "servicio": "Grafana / Node.js Dev",
+        "nivel_riesgo": "medio",
+        "descripcion": "Usado comunmente con credenciales por defecto (admin:admin) o APIs en modo desarrollo.",
+        "mitigacion": "Cambiar claves de fabrica de inmediato y no exponer paneles de desarrollo."
+      },
+      {
+        "puerto": 5601,
+        "protocolo": "TCP",
+        "servicio": "Kibana",
+        "nivel_riesgo": "alto",
+        "descripcion": "Panel de visualizacion de logs expuesto sin autenticacion que filtra informacion operativa sensible.",
+        "mitigacion": "Habilitar la seguridad nativa de Elastic/Kibana y configurar un login obligatorio."
+      },
+      {
+        "puerto": 8125,
+        "protocolo": "UDP",
+        "servicio": "StatsD",
+        "nivel_riesgo": "medio",
+        "descripcion": "Recolector de metricas por UDP sin autenticacion, susceptible a inyeccion de datos falsos.",
+        "mitigacion": "Restringir el acceso a la red interna y no exponerlo a internet."
+      },
+      {
+        "puerto": 9091,
+        "protocolo": "TCP",
+        "servicio": "Prometheus Pushgateway",
+        "nivel_riesgo": "medio",
+        "descripcion": "Permite enviar metricas al sistema de monitoreo sin autenticacion por defecto.",
+        "mitigacion": "Colocar detras de un proxy inverso con autenticacion y restringir el acceso por IP."
+      },
+      {
+        "puerto": 12201,
+        "protocolo": "TCP/UDP",
+        "servicio": "Graylog GELF",
+        "nivel_riesgo": "medio",
+        "descripcion": "Endpoint de ingesta de logs que, sin proteccion, permite inyectar entradas falsas o saturar el sistema.",
+        "mitigacion": "Restringir el acceso a los emisores de logs autorizados mediante firewall."
+      }
+    ]
+  },
+  {
+    "categoria": "Otros e Indicadores de Compromiso",
+    "puertos": [
+      {
+        "puerto": 1524,
+        "protocolo": "TCP",
+        "servicio": "Ingreslock (backdoor historico)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto historicamente asociado a shells de puerta trasera (backdoor) dejadas por exploits automatizados.",
+        "mitigacion": "Investigar de inmediato cualquier proceso escuchando en este puerto; es una fuerte señal de compromiso."
+      },
+      {
+        "puerto": 4444,
+        "protocolo": "TCP",
+        "servicio": "Metasploit Default Listener / Reverse Shell",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto clasicamente usado como listener por defecto de Metasploit y reverse shells.",
+        "mitigacion": "Investigar cualquier proceso escuchando en este puerto como posible indicador de compromiso."
+      },
+      {
+        "puerto": 6667,
+        "protocolo": "TCP",
+        "servicio": "IRC",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de chat usado frecuentemente como canal de comando y control (C2) por botnets.",
+        "mitigacion": "Bloquear el trafico IRC saliente no autorizado y monitorear conexiones inusuales."
+      },
+      {
+        "puerto": 9001,
+        "protocolo": "TCP",
+        "servicio": "Tor ORPort / Supervisor",
+        "nivel_riesgo": "alto",
+        "descripcion": "Utilizado para nodos de la red Tor o para el control del proceso Supervisor sin cifrado.",
+        "mitigacion": "Proteger la consola con contraseña y restringir la escucha a la interfaz loopback."
+      },
+      {
+        "puerto": 9999,
+        "protocolo": "TCP",
+        "servicio": "Urchin / APNs / Malware comun",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto no estandar usado tanto por herramientas administrativas viejas como por troyanos.",
+        "mitigacion": "Identificar el proceso activo mediante netstat/lsof y bloquear el puerto si es innecesario."
+      },
+      {
+        "puerto": 12345,
+        "protocolo": "TCP",
+        "servicio": "NetBus (troyano)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto historicamente asociado al troyano NetBus, usado para control remoto no autorizado de equipos Windows.",
+        "mitigacion": "Cualquier servicio activo en este puerto debe tratarse como indicador de compromiso e investigarse de inmediato."
+      },
+      {
+        "puerto": 31337,
+        "protocolo": "TCP",
+        "servicio": "Back Orifice (troyano)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Puerto asociado al troyano clasico Back Orifice, usado para tomar control remoto total de un equipo comprometido.",
+        "mitigacion": "Tratar cualquier actividad en este puerto como indicador de compromiso y aislar el equipo afectado."
+      }
+    ]
+  },
+  {
+    "categoria": "Proxy y Anonimato",
+    "puertos": [
+      {
+        "puerto": 1080,
+        "protocolo": "TCP",
+        "servicio": "SOCKS Proxy",
+        "nivel_riesgo": "alto",
+        "descripcion": "Proxies SOCKS abiertos sin autenticacion son explotados por atacantes para pivotar y anonimizar trafico malicioso.",
+        "mitigacion": "Requerir autenticacion obligatoria y limitar el acceso solo a clientes IP autorizados."
+      },
+      {
+        "puerto": 3128,
+        "protocolo": "TCP",
+        "servicio": "Squid Proxy",
+        "nivel_riesgo": "alto",
+        "descripcion": "Un proxy abierto mal configurado permite a atacantes anonimizar trafico malicioso a su nombre.",
+        "mitigacion": "Configurar listas de control de acceso (ACL) para restringir el uso solo a clientes internos."
+      },
+      {
+        "puerto": 8118,
+        "protocolo": "TCP",
+        "servicio": "Privoxy",
+        "nivel_riesgo": "alto",
+        "descripcion": "Proxy de filtrado web que, mal configurado, puede ser usado como proxy abierto para anonimizar trafico malicioso.",
+        "mitigacion": "Configurar listas de control de acceso y no exponerlo a redes publicas."
+      },
+      {
+        "puerto": 9050,
+        "protocolo": "TCP",
+        "servicio": "Tor SOCKS Proxy",
+        "nivel_riesgo": "alto",
+        "descripcion": "Puerto de salida a la red Tor; su uso no autorizado dentro de una organizacion puede indicar exfiltracion de datos o evasion de controles.",
+        "mitigacion": "Monitorear y restringir el trafico saliente hacia este puerto segun la politica de la organizacion."
+      }
+    ]
+  },
+  {
+    "categoria": "Red e Infraestructura",
+    "puertos": [
+      {
+        "puerto": 43,
+        "protocolo": "TCP",
+        "servicio": "WHOIS",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Servicio de consulta publica de registros de dominio; riesgo bajo, aunque puede usarse para reconocimiento (recon) por atacantes.",
+        "mitigacion": "No requiere mitigacion tecnica directa; monitorear consultas masivas como posible reconocimiento."
+      },
+      {
+        "puerto": 53,
+        "protocolo": "TCP/UDP",
+        "servicio": "DNS",
+        "nivel_riesgo": "medio",
+        "descripcion": "Susceptible a cache poisoning, exfiltracion de datos por tuneles DNS y ataques de amplificacion.",
+        "mitigacion": "Usar DNSSEC y limitar las consultas recursivas a clientes autorizados."
+      },
+      {
+        "puerto": 67,
+        "protocolo": "UDP",
+        "servicio": "DHCP Server",
+        "nivel_riesgo": "medio",
+        "descripcion": "Permite levantar servidores DHCP falsos (Rogue DHCP) para desviar trafico y hacer ataques MitM.",
+        "mitigacion": "Habilitar DHCP Snooping en los switches de red."
+      },
+      {
+        "puerto": 68,
+        "protocolo": "UDP",
+        "servicio": "DHCP Client",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto del cliente para recibir asignacion de IP; vulnerable a desvios de red locales.",
+        "mitigacion": "Validar gateways autorizados y usar proteccion de capa 2 en switches."
+      },
+      {
+        "puerto": 69,
+        "protocolo": "UDP",
+        "servicio": "TFTP",
+        "nivel_riesgo": "alto",
+        "descripcion": "No requiere autenticacion; usado para transferir configuraciones y firmware de routers.",
+        "mitigacion": "Deshabilitar el servicio fuera de ventanas de mantenimiento controladas."
+      },
+      {
+        "puerto": 111,
+        "protocolo": "TCP/UDP",
+        "servicio": "RPCbind",
+        "nivel_riesgo": "medio",
+        "descripcion": "Permite enumerar los servicios RPC disponibles en un host, facilitando el reconocimiento previo a un ataque.",
+        "mitigacion": "Restringir el acceso mediante firewall y deshabilitar si no se usa NFS/RPC."
+      },
+      {
+        "puerto": 123,
+        "protocolo": "UDP",
+        "servicio": "NTP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Explotado como vector de ataques de amplificacion DDoS mediante el comando monlist.",
+        "mitigacion": "Actualizar a una version moderna de NTP y deshabilitar monlist."
+      },
+      {
+        "puerto": 161,
+        "protocolo": "UDP",
+        "servicio": "SNMP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Frecuentemente usa community strings por defecto (public/private) que exponen configuracion de red.",
+        "mitigacion": "Migrar a SNMPv3 con autenticacion y cifrado, y cambiar las community strings."
+      },
+      {
+        "puerto": 162,
+        "protocolo": "UDP",
+        "servicio": "SNMP Trap",
+        "nivel_riesgo": "medio",
+        "descripcion": "Recibe notificaciones de dispositivos que pueden ser falsificadas si no hay autenticacion.",
+        "mitigacion": "Migrar a SNMPv3 y restringir el origen de los traps."
+      },
+      {
+        "puerto": 179,
+        "protocolo": "TCP",
+        "servicio": "BGP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de enrutamiento entre sistemas autonomos; sin autenticacion permite ataques de secuestro de rutas (BGP hijacking).",
+        "mitigacion": "Habilitar autenticacion MD5/TCP-AO entre peers y filtrar rutas anunciadas."
+      },
+      {
+        "puerto": 500,
+        "protocolo": "UDP",
+        "servicio": "IPSec/ISAKMP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Configuraciones VPN debiles pueden exponer el establecimiento de tuneles a ataques.",
+        "mitigacion": "Usar IKEv2 con algoritmos de cifrado fuertes y llaves precompartidas complejas."
+      },
+      {
+        "puerto": 520,
+        "protocolo": "UDP",
+        "servicio": "RIP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Protocolo de enrutamiento antiguo sin autenticacion fuerte, vulnerable a inyeccion de rutas falsas.",
+        "mitigacion": "Migrar a protocolos de enrutamiento modernos con autenticacion (OSPF con MD5, o EIGRP)."
+      },
+      {
+        "puerto": 1900,
+        "protocolo": "UDP",
+        "servicio": "UPnP/SSDP",
+        "nivel_riesgo": "alto",
+        "descripcion": "Comun en routers e IoT, usado como vector de amplificacion DDoS y exposicion de servicios internos.",
+        "mitigacion": "Deshabilitar UPnP en el router si no es estrictamente necesario."
+      },
+      {
+        "puerto": 3702,
+        "protocolo": "UDP",
+        "servicio": "WS-Discovery",
+        "nivel_riesgo": "medio",
+        "descripcion": "Protocolo de descubrimiento de dispositivos usado por camaras e impresoras; explotado como vector de amplificacion DDoS.",
+        "mitigacion": "Deshabilitar WS-Discovery en dispositivos que no lo requieran o filtrarlo en el firewall perimetral."
+      },
+      {
+        "puerto": 4786,
+        "protocolo": "TCP",
+        "servicio": "Cisco Smart Install",
+        "nivel_riesgo": "critico",
+        "descripcion": "Caracteristica de configuracion automatica que permite descargar la configuracion completa del switch.",
+        "mitigacion": "Desactivar la funcion mediante el comando \"no vstack\" en la consola del equipo Cisco."
+      },
+      {
+        "puerto": 5353,
+        "protocolo": "UDP",
+        "servicio": "mDNS (Multicast DNS)",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Fuga pasiva de informacion local respondiendo con el nombre, modelo y fabricante del equipo.",
+        "mitigacion": "Deshabilitar Avahi/Bonjour si no se utiliza o segmentar con VLANs."
+      },
+      {
+        "puerto": 5357,
+        "protocolo": "TCP",
+        "servicio": "WSDAPI (Web Services for Devices)",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Permite descubrir dispositivos en la red local Windows, revelando versiones e informacion interna.",
+        "mitigacion": "Deshabilitar la Deteccion de Redes en perfiles de red publicas."
+      }
+    ]
+  },
+  {
+    "categoria": "Servicios Web y Paneles",
+    "puertos": [
+      {
+        "puerto": 80,
+        "protocolo": "TCP",
+        "servicio": "HTTP",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transmite datos sin cifrar, susceptible a interceptacion y manipulacion de contenido.",
+        "mitigacion": "Forzar redireccion a HTTPS mediante HSTS."
+      },
+      {
+        "puerto": 443,
+        "protocolo": "TCP",
+        "servicio": "HTTPS",
+        "nivel_riesgo": "bajo",
+        "descripcion": "Cifrado por defecto, pero el riesgo depende de la validez y configuracion del certificado.",
+        "mitigacion": "Usar certificados validos, TLS 1.2+ y revisar cabeceras de seguridad."
+      },
+      {
+        "puerto": 2082,
+        "protocolo": "TCP",
+        "servicio": "cPanel Control Panel (HTTP)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Interfaz web de gestion de alojamiento en texto plano que expone credenciales de administracion.",
+        "mitigacion": "Bloquear el puerto 2082 y forzar la redireccion al puerto seguro 2083 (HTTPS)."
+      },
+      {
+        "puerto": 2083,
+        "protocolo": "TCP",
+        "servicio": "cPanel Control Panel (HTTPS)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Panel de control del servidor que puede ser vulnerable a ataques de fuerza bruta si no tiene MFA.",
+        "mitigacion": "Habilitar autenticacion de dos factores (2FA) y bloqueo IP automatico."
+      },
+      {
+        "puerto": 2086,
+        "protocolo": "TCP",
+        "servicio": "WHM Web Host Manager (HTTP)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Acceso root a la gestion del servidor web transmitido sin cifrado de capa de red.",
+        "mitigacion": "Cerrar el puerto HTTP y exigir exclusivamente el uso del puerto 2087 (HTTPS)."
+      },
+      {
+        "puerto": 2087,
+        "protocolo": "TCP",
+        "servicio": "WHM Web Host Manager (HTTPS)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Interfaz de administracion root expuesta a la red publica susceptible a descifrado de credenciales.",
+        "mitigacion": "Restringir el puerto 2087 solo a direcciones IP de administradores autorizados."
+      },
+      {
+        "puerto": 3001,
+        "protocolo": "TCP",
+        "servicio": "Node.js Dev Server (alternativo)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto comun para servidores de desarrollo Node.js/React expuestos accidentalmente.",
+        "mitigacion": "Cerrar el puerto en produccion y restringir su uso a entornos locales."
+      },
+      {
+        "puerto": 5000,
+        "protocolo": "TCP",
+        "servicio": "Flask / Docker Registry",
+        "nivel_riesgo": "medio",
+        "descripcion": "Servidores de prueba en modo depuracion (Debug) que exponen la consola PIN para ejecutar codigo.",
+        "mitigacion": "Desactivar Debug Mode en produccion y usar un servidor web frontal como Nginx."
+      },
+      {
+        "puerto": 7777,
+        "protocolo": "TCP",
+        "servicio": "HTTP alternativo / Panel administrativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto no estandar frecuentemente usado por paneles de administracion caseros o servidores de juegos, rara vez auditado.",
+        "mitigacion": "Documentar el servicio real en uso y aplicar las mismas politicas de seguridad que a un panel web estandar."
+      },
+      {
+        "puerto": 8000,
+        "protocolo": "TCP",
+        "servicio": "HTTP alternativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Frecuente en aplicaciones de desarrollo expuestas accidentalmente a produccion.",
+        "mitigacion": "Cerrar el puerto en produccion y usar reglas de firewall para entornos de desarrollo."
+      },
+      {
+        "puerto": 8008,
+        "protocolo": "TCP",
+        "servicio": "HTTP Alternate / Matrix / Chromecast",
+        "nivel_riesgo": "medio",
+        "descripcion": "Usado frecuentemente para apis HTTP internas o servicios REST sin la configuracion TLS adecuada.",
+        "mitigacion": "Configurar TLS y validar las politicas de CORS en las aplicaciones."
+      },
+      {
+        "puerto": 8080,
+        "protocolo": "TCP",
+        "servicio": "HTTP alternativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Comun en paneles de administracion o proxies olvidados y sin proteccion.",
+        "mitigacion": "Restringir el acceso por IP y cerrar el puerto si no esta en uso."
+      },
+      {
+        "puerto": 8081,
+        "protocolo": "TCP",
+        "servicio": "Nexus Repository",
+        "nivel_riesgo": "alto",
+        "descripcion": "Gestor de paquetes que puede conservar la clave por defecto (admin123) permitiendo envenenar dependencias.",
+        "mitigacion": "Cambiar la clave de administrador tras instalar y aislarlo en red interna."
+      },
+      {
+        "puerto": 8181,
+        "protocolo": "TCP",
+        "servicio": "HTTPS alternativo / Panel administrativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto alterno usado por diversos paneles de administracion web, frecuentemente con configuracion por defecto.",
+        "mitigacion": "Cambiar credenciales por defecto y restringir el acceso por IP."
+      },
+      {
+        "puerto": 8443,
+        "protocolo": "TCP",
+        "servicio": "HTTPS alternativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Suele alojar paneles de administracion expuestos sin las mismas protecciones que el sitio principal.",
+        "mitigacion": "Aplicar las mismas politicas de seguridad que al puerto 443 y restringir accesos."
+      },
+      {
+        "puerto": 8880,
+        "protocolo": "TCP",
+        "servicio": "cPanel / Plesk (HTTP)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Panel de control de servidores web en texto plano; interceptar datos permite adueñarse de sitios web.",
+        "mitigacion": "Bloquear este puerto y obligar a usar la conexion cifrada con HTTPS."
+      },
+      {
+        "puerto": 8888,
+        "protocolo": "TCP",
+        "servicio": "HTTP alternativo",
+        "nivel_riesgo": "medio",
+        "descripcion": "Usado por herramientas de desarrollo (ej. Jupyter) que pueden quedar expuestas sin autenticacion.",
+        "mitigacion": "Exigir autenticacion por token y restringir el acceso a la red local."
+      },
+      {
+        "puerto": 9000,
+        "protocolo": "TCP",
+        "servicio": "PHP-FPM / Portainer",
+        "nivel_riesgo": "critico",
+        "descripcion": "Si expone directamente FastCGI (PHP-FPM), permite inyeccion y ejecucion arbitraria de comandos.",
+        "mitigacion": "Enlazar a un socket Unix (/run/php/php-fpm.sock) o exclusivamente a 127.0.0.1."
+      },
+      {
+        "puerto": 9443,
+        "protocolo": "TCP",
+        "servicio": "WSO2 / Admin Console Alternative",
+        "nivel_riesgo": "alto",
+        "descripcion": "Consola de gestion de APIs empresariales blanco de intentos de login por fuerza bruta.",
+        "mitigacion": "Limitar el acceso perimetral mediante un firewall y configurar reglas de bloqueo IP."
+      }
+    ]
+  },
+  {
+    "categoria": "Sistemas Industriales (SCADA / ICS)",
+    "puertos": [
+      {
+        "puerto": 102,
+        "protocolo": "TCP",
+        "servicio": "Siemens S7 / ISO-TSAP",
+        "nivel_riesgo": "critico",
+        "descripcion": "Comunicacion directa con Automatas Programables (PLC) de Siemens sin autenticacion ni cifrado nativo.",
+        "mitigacion": "Aislar la red OT de la red IT y bloquear el puerto en firewalls perimetrales."
+      },
+      {
+        "puerto": 502,
+        "protocolo": "TCP",
+        "servicio": "Modbus TCP",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo industrial legacy sin cifrado ni autenticacion para enviar ordenes directas a PLCs.",
+        "mitigacion": "Aislar la red operativa con firewalls industriales y usar tuneles VPN."
+      },
+      {
+        "puerto": 9600,
+        "protocolo": "TCP/UDP",
+        "servicio": "OMRON FINS",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo propietario para PLCs OMRON que permite comandos de lectura/escritura sin autenticacion.",
+        "mitigacion": "Restringir el acceso a la red OT mediante firewalls industriales dedicados."
+      },
+      {
+        "puerto": 20000,
+        "protocolo": "TCP/UDP",
+        "servicio": "DNP3",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo industrial usado en subestaciones electricas y sistemas SCADA sin autenticacion nativa en versiones antiguas.",
+        "mitigacion": "Aislar la red OT, usar DNP3 Secure Authentication y bloquear el acceso desde redes IT."
+      },
+      {
+        "puerto": 44818,
+        "protocolo": "TCP/UDP",
+        "servicio": "EtherNet/IP",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo industrial de Rockwell/Allen-Bradley que permite leer y escribir directamente en PLCs sin autenticacion.",
+        "mitigacion": "Segmentar la red industrial y restringir el acceso solo a estaciones de ingenieria autorizadas."
+      },
+      {
+        "puerto": 47808,
+        "protocolo": "UDP",
+        "servicio": "BACnet",
+        "nivel_riesgo": "critico",
+        "descripcion": "Protocolo de automatizacion de edificios (HVAC, control de accesos) sin cifrado ni autenticacion robusta.",
+        "mitigacion": "Aislar la red BACnet del resto de la infraestructura y usar gateways con control de acceso."
+      }
+    ]
+  },
+  {
+    "categoria": "Telefonia IP y Voz",
+    "puertos": [
+      {
+        "puerto": 1720,
+        "protocolo": "TCP",
+        "servicio": "H.323",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de señalizacion de videoconferencia/VoIP susceptible a fraude telefonico y ataques de reconocimiento.",
+        "mitigacion": "Restringir el acceso a la red de voz mediante VLANs y firewalls especificos para VoIP."
+      },
+      {
+        "puerto": 2000,
+        "protocolo": "TCP",
+        "servicio": "Cisco SCCP (Skinny)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Control de señalizacion VoIP sin cifrar susceptible a suplantacion de llamadas y ataques MitM.",
+        "mitigacion": "Migrar a señalizacion SIP cifrada mediante TLS/SRTP."
+      },
+      {
+        "puerto": 2427,
+        "protocolo": "TCP/UDP",
+        "servicio": "MGCP Gateway",
+        "nivel_riesgo": "medio",
+        "descripcion": "Protocolo de control de gateways de voz sin cifrado, susceptible a manipulacion de llamadas.",
+        "mitigacion": "Segmentar la red de voz y limitar el acceso a dispositivos autorizados."
+      },
+      {
+        "puerto": 2727,
+        "protocolo": "TCP/UDP",
+        "servicio": "MGCP Callagent",
+        "nivel_riesgo": "medio",
+        "descripcion": "Puerto del controlador de llamadas MGCP; su compromiso permite interceptar o redirigir señalizacion de voz.",
+        "mitigacion": "Restringir el acceso solo entre el callagent y los gateways autorizados."
+      },
+      {
+        "puerto": 5004,
+        "protocolo": "UDP",
+        "servicio": "RTP (Real-time Transport Protocol)",
+        "nivel_riesgo": "medio",
+        "descripcion": "Transporta el flujo multimedia de audio/video sin cifrar, permitiendo la escucha de llamadas.",
+        "mitigacion": "Reemplazar por SRTP (Secure Real-time Transport Protocol)."
+      },
+      {
+        "puerto": 5038,
+        "protocolo": "TCP",
+        "servicio": "Asterisk Manager Interface (AMI)",
+        "nivel_riesgo": "critico",
+        "descripcion": "Permite control total sobre la centralita telefonica VoIP si se obtienen las credenciales.",
+        "mitigacion": "Enlazar a 127.0.0.1 y exigir contraseñas complejas en manager.conf."
+      },
+      {
+        "puerto": 5060,
+        "protocolo": "TCP/UDP",
+        "servicio": "SIP (VoIP)",
+        "nivel_riesgo": "alto",
+        "descripcion": "Protocolo de voz sobre IP sin cifrado; expuesto a intercepcion de llamadas y fuerza bruta.",
+        "mitigacion": "Migrar a SIP Seguro (SIPS en puerto 5061 sobre TLS) y usar claves robustas."
+      },
+      {
+        "puerto": 10011,
+        "protocolo": "TCP",
+        "servicio": "TeamSpeak Server Query",
+        "nivel_riesgo": "medio",
+        "descripcion": "Interfaz de comandos para administrar servidores de voz expuesta a fuerza bruta.",
+        "mitigacion": "Cambiar la contraseña del superadmin e implementar listas blancas de IP."
+      }
+    ]
+  }
+]

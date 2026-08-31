@@ -1,0 +1,16 @@
+# Entorno virtual de Python (cada quien crea el suyo localmente)
+venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Base de datos local (cada quien genera la suya con database.py)
+database.db
+
+# Imágenes QR generadas (se regeneran con registrar.py)
+qr_codes/*.png
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db

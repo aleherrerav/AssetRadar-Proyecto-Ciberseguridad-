@@ -46,14 +46,14 @@ import nmap  # python-nmap
 # ==============================================================================
 
 # Red objetivo en notación CIDR. Ajustar según el entorno de auditoría.
-RED_OBJETIVO = "192.168.18.199"
+RED_OBJETIVO = "192.168.1.0/24"
 
 # Endpoint del backend (Flask) que recibirá los resultados consolidados.
 API_URL = "http://127.0.0.1:5000/api/actualizar_escaneo"
 
 # Número de procesos paralelos. El enunciado indica un equipo de 16 núcleos;
 # se deja 1 núcleo libre para el SO y el proceso orquestador principal.
-MAX_WORKERS = 5
+MAX_WORKERS = 15
 
 # Segundos de espera entre cada ciclo completo de escaneo de la subred.
 INTERVALO_CICLOS_SEGUNDOS = 60
@@ -73,14 +73,14 @@ PUERTOS_UDP_CRITICOS = "53,67,68,123,161,500"
 # Rango de puertos TCP a escanear. "-p-" = los 65535 puertos completos.
 # Se puede sustituir por "--top-ports 10000" si se requiere un balance
 # distinto entre exhaustividad y velocidad.
-RANGO_PUERTOS_TCP = "--top-ports 100" 
+RANGO_PUERTOS_TCP = "-p-"
 
 # Timeout máximo por host individual, evita que un host "colgado"
 # bloquee indefinidamente un proceso worker.
 HOST_TIMEOUT = "5m"
 
 # Tasa mínima de paquetes por segundo (velocidad agresiva pero estable).
-MIN_RATE = "100"
+MIN_RATE = "1000"
 
 # Número máximo de reintentos por puerto antes de descartarlo.
 MAX_RETRIES = "2"
